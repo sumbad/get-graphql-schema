@@ -17,7 +17,7 @@ const usage = `  Usage: get-graphql-schema ENDPOINT_URL > schema.graphql
   (Outputs schema in IDL syntax by default)
 
   Options:
-    --header, -h    Add a custom header (ex. 'X-API-KEY=ABC123'), can be used multiple times
+    --header, -h    Add a custom header (ex. 'X-API-KEY: ABC123', 'Cookie: biscuit=123'), can be used multiple times
     --json, -j      Output in JSON format (based on introspection query)
     --version, -v   Print version of get-graphql-schema
 `
@@ -44,7 +44,7 @@ async function main() {
   const headers = toArray(argv['header'])
     .concat(toArray(argv['h']))
     .reduce((obj, header: string) => {
-      const [key, value] = header.split('=')
+      const [key, value] = header.split(':')
       obj[key] = value
       return obj
     }, defaultHeaders)
